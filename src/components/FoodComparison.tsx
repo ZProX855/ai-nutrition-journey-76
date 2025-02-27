@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { ArrowRight, Loader2, BarChart3 } from 'lucide-react';
+import { ArrowRight, Loader2, BarChart3, ChevronDown } from 'lucide-react';
 import { getFoodComparisonData } from '@/lib/api';
 import { useToast } from "@/hooks/use-toast";
 
