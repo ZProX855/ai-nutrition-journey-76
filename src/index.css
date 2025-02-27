@@ -1,4 +1,5 @@
 
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -33,11 +34,12 @@
     --input: 150 20% 90%;
     --ring: 152 57% 46%;
 
-    --radius: 0.75rem;
+    --radius: 1rem;
   }
 
   * {
     @apply border-border selection:bg-primary/10;
+    scroll-behavior: smooth;
   }
 
   body {
@@ -52,7 +54,7 @@
   }
   
   .section-container {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16;
+    @apply max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20;
   }
   
   .section-title {
@@ -82,6 +84,32 @@
   .ghost-button {
     @apply px-6 py-3 rounded-xl bg-transparent text-foreground font-medium transition-all duration-200 hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-primary/30 disabled:opacity-50;
   }
+  
+  /* Cartoonic elements */
+  .cartoon-shadow {
+    @apply shadow-[0_8px_25px_-5px_rgba(0,0,0,0.1),0_10px_10px_-5px_rgba(0,0,0,0.04)];
+  }
+  
+  .cartoon-border {
+    @apply border-2 border-border rounded-2xl;
+  }
+  
+  .bubble {
+    @apply relative rounded-3xl p-6;
+  }
+  
+  .bubble:after {
+    content: '';
+    @apply absolute w-4 h-4 rotate-45 bg-inherit border-l-0 border-t-0 border-r border-b border-current;
+  }
+  
+  .bubble-right:after {
+    @apply -right-2 top-6;
+  }
+  
+  .bubble-left:after {
+    @apply -left-2 top-6;
+  }
 }
 
 .animate-in {
@@ -108,3 +136,37 @@
     transform: translateY(0);
   }
 }
+
+/* Bouncy hover animation for interactive elements */
+.bouncy-hover {
+  transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.bouncy-hover:hover {
+  transform: scale(1.05);
+}
+
+/* Floating animation */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Wiggle animation */
+@keyframes wiggle {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(3deg); }
+  50% { transform: rotate(0deg); }
+  75% { transform: rotate(-3deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.animate-wiggle:hover {
+  animation: wiggle 0.5s ease-in-out;
+}
+

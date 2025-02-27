@@ -114,7 +114,8 @@ export const getBMIRecommendations = async (bmi: number, height: number, weight:
       "exercise": ["string", "string"],
       "general": ["string", "string"]
     }
-  }`;
+  }
+  Keep your tone friendly and informal like a nutrition doctor. Use simple language and organize your recommendations in an easy-to-understand way.`;
 
   try {
     const response = await queryGeminiAPI({ prompt, temperature: 0.7 });
@@ -130,8 +131,12 @@ export const getBMIRecommendations = async (bmi: number, height: number, weight:
 };
 
 export const getChatbotResponse = async (question: string) => {
-  const prompt = `As a nutrition and wellness expert, please provide a helpful response to this question: "${question}"
-  Keep your response concise, informative, and evidence-based.`;
+  const prompt = `As a friendly nutrition doctor, please provide a helpful response to this question: "${question}"
+  Keep your response concise, informative, and evidence-based.
+  Use bullet points to organize your answer.
+  Add emojis in your response to make it friendly and engaging.
+  Maintain a warm, conversational tone like you're talking to a patient.
+  End with a follow-up question to encourage continued conversation.`;
 
   try {
     return await queryGeminiAPI({ prompt, temperature: 0.7 });
@@ -187,7 +192,8 @@ export const getBodyTypeRecommendations = async (bodyType: 'ectomorph' | 'mesomo
       "challenge1": "solution1",
       "challenge2": "solution2"
     }
-  }`;
+  }
+  Use friendly, informal language and make the recommendations easy to understand.`;
 
   try {
     const response = await queryGeminiAPI({ prompt, temperature: 0.3 });

@@ -1,104 +1,90 @@
 
-import { useState, useEffect } from 'react';
-import { ChevronDown, Menu, X } from 'lucide-react';
+import { useState } from 'react';
+import { Menu, X } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 10) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
-
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      window.scrollTo({
-        top: element.offsetTop - 100,
-        behavior: 'smooth',
-      });
-      setIsMobileMenuOpen(false);
-    }
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
   };
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white/90 backdrop-blur-sm shadow-sm' : 'bg-transparent'
-      }`}
-    >
-      <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <div className="flex items-center">
-          <a href="/" className="text-xl font-medium text-primary flex items-center gap-2">
-            <span className="text-2xl">🍃</span>
-            <span>Wellness AI</span>
-          </a>
+    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-white/70 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container flex h-16 items-center justify-between">
+        <Link to="/" className="flex items-center gap-2">
+          <img 
+            src="/lovable-uploads/79da89f1-2330-4d6b-95a1-8e822552f9f0.png" 
+            alt="Wellness App Logo" 
+            className="h-12 w-auto"
+          />
+          <span className="text-xl font-bold text-primary hidden sm:inline-block">NutriWellness</span>
+        </Link>
+
+        <div className="hidden md:flex gap-6">
+          <a href="#bmi-calculator" className="text-muted-foreground hover:text-foreground transition-colors">BMI Calculator</a>
+          <a href="#food-comparison" className="text-muted-foreground hover:text-foreground transition-colors">Food Comparison</a>
+          <a href="#ai-assistant" className="text-muted-foreground hover:text-foreground transition-colors">AI Assistant</a>
+          <a href="#meal-recognition" className="text-muted-foreground hover:text-foreground transition-colors">Meal Recognition</a>
         </div>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-8">
-          <NavLink onClick={() => scrollToSection('food-comparison')}>Food Comparison</NavLink>
-          <NavLink onClick={() => scrollToSection('bmi-calculator')}>BMI Calculator</NavLink>
-          <NavLink onClick={() => scrollToSection('ai-assistant')}>AI Assistant</NavLink>
-          <NavLink onClick={() => scrollToSection('meal-recognition')}>Meal Analysis</NavLink>
-          <NavLink onClick={() => scrollToSection('body-type')}>Body Types</NavLink>
-        </nav>
-
-        {/* Mobile Menu Button */}
-        <button
-          className="md:hidden text-foreground p-2 rounded-full"
-          onClick={toggleMobileMenu}
-          aria-label="Toggle menu"
-        >
-          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        <button className="md:hidden" onClick={toggleMenu}>
+          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
-      {/* Mobile Navigation */}
-      {isMobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-white shadow-md animate-slide-down">
-          <div className="container mx-auto px-4 py-4 flex flex-col gap-4">
-            <MobileNavLink onClick={() => scrollToSection('food-comparison')}>Food Comparison</MobileNavLink>
-            <MobileNavLink onClick={() => scrollToSection('bmi-calculator')}>BMI Calculator</MobileNavLink>
-            <MobileNavLink onClick={() => scrollToSection('ai-assistant')}>AI Assistant</MobileNavLink>
-            <MobileNavLink onClick={() => scrollToSection('meal-recognition')}>Meal Analysis</MobileNavLink>
-            <MobileNavLink onClick={() => scrollToSection('body-type')}>Body Types</MobileNavLink>
+      {/* Mobile menu */}
+      {isMenuOpen && (
+        <div className="md:hidden w-full bg-background border-b border-border animate-in slide-in-from-top py-4">
+          <div className="container flex flex-col space-y-4">
+            <a 
+              href="#bmi-calculator" 
+              className="text-foreground p-2 rounded-md hover:bg-secondary transition-colors"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              BMI Calculator
+            </a>
+            <a 
+              href="#food-comparison" 
+              className="text-foreground p-2 rounded-md hover:bg-secondary transition-colors"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Food Comparison
+            </a>
+            <a 
+              href="#ai-assistant" 
+              className="text-foreground p-2 rounded-md hover:bg-secondary transition-colors"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              AI Assistant
+            </a>
+            <a 
+              href="#meal-recognition" 
+              className="text-foreground p-2 rounded-md hover:bg-secondary transition-colors"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Meal Recognition
+            </a>
+            <a 
+              href="#wellness-journey" 
+              className="text-foreground p-2 rounded-md hover:bg-secondary transition-colors"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Wellness Journey
+            </a>
+            <a 
+              href="#body-type" 
+              className="text-foreground p-2 rounded-md hover:bg-secondary transition-colors"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Body Type Guide
+            </a>
           </div>
         </div>
       )}
     </header>
   );
 };
-
-const NavLink = ({ children, onClick }: { children: React.ReactNode; onClick: () => void }) => (
-  <button
-    onClick={onClick}
-    className="text-foreground hover:text-primary transition-colors duration-200 font-medium"
-  >
-    {children}
-  </button>
-);
-
-const MobileNavLink = ({ children, onClick }: { children: React.ReactNode; onClick: () => void }) => (
-  <button
-    onClick={onClick}
-    className="w-full text-left py-3 border-b border-border text-foreground hover:text-primary transition-colors duration-200"
-  >
-    {children}
-  </button>
-);
 
 export default Navbar;
