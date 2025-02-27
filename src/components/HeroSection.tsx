@@ -23,17 +23,17 @@ const HeroSection = () => {
         <div className="mb-6 transform hover:rotate-3 transition-transform duration-300">
           <img 
             src="/lovable-uploads/79da89f1-2330-4d6b-95a1-8e822552f9f0.png" 
-            alt="NutriWellness Logo" 
-            className="w-32 h-32 md:w-40 md:h-40 mx-auto"
+            alt="Wellness Tracker Logo" 
+            className="w-24 h-24 md:w-32 md:h-32 object-contain mx-auto"
           />
         </div>
         
         <h1 className="text-4xl md:text-6xl font-bold mb-4 text-foreground animate-in">
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-wellness-500">NutriWellness</span> Tracker
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-wellness-500">Wellness</span> Tracker
         </h1>
         
-        <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mb-8 animate-in">
-          Your friendly companion for nutrition, health tracking, and personalized wellness advice
+        <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mb-8 animate-in">
+          Your friendly companion for health tracking and personalized wellness advice
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 animate-in">

@@ -1,4 +1,3 @@
-
 // API constants and helper functions for Google Gemini 1.5 API
 const GEMINI_API_KEY = 'AIzaSyDmoumroXhKpFdcPBqhrw6W6F_PZp--LMI'; // Note: In a real app, this should be stored securely
 const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
@@ -131,12 +130,15 @@ export const getBMIRecommendations = async (bmi: number, height: number, weight:
 };
 
 export const getChatbotResponse = async (question: string) => {
-  const prompt = `As a friendly nutrition doctor, please provide a helpful response to this question: "${question}"
-  Keep your response concise, informative, and evidence-based.
-  Use bullet points to organize your answer.
-  Add emojis in your response to make it friendly and engaging.
-  Maintain a warm, conversational tone like you're talking to a patient.
-  End with a follow-up question to encourage continued conversation.`;
+  const prompt = `As Dr. Nutri, a friendly nutrition expert, provide a concise, practical response to: "${question}"
+  Requirements:
+  - Keep your response under 100 words
+  - Use bullet points to organize information
+  - Be direct and practical
+  - Use emojis sparingly (max 2) to maintain friendliness
+  - Focus on actionable advice
+  - End with a short, relevant follow-up question
+  - Format: Start with a one-line greeting, then bullet points, then question`;
 
   try {
     return await queryGeminiAPI({ prompt, temperature: 0.7 });
@@ -146,34 +148,29 @@ export const getChatbotResponse = async (question: string) => {
   }
 };
 
-export const analyzeMealImage = async (imageBase64: string) => {
-  const prompt = `Analyze this meal image and estimate its nutritional content.
-  Identify the foods visible, and provide an estimate of calories, protein, carbs, and fat.
-  Format your response as a JSON object with the following structure:
+export const analyzeMealImage = async (imageBase64: string, weightInGrams?: number) => {
+  const prompt = `Analyze this meal image in detail and provide nutritional information${weightInGrams ? ` for ${weightInGrams}g of the meal` : ''}.
+  Keep the analysis concise and practical.
+  Format your response as a JSON object with:
   {
-    "identifiedFoods": ["string", "string", ...],
+    "identifiedFoods": ["List", "each", "ingredient"],
     "nutritionalEstimate": {
-      "calories": number,
-      "protein": number,
-      "carbs": number,
-      "fat": number
+      "calories": number per ${weightInGrams ? weightInGrams : 100}g,
+      "protein": number in g,
+      "carbs": number in g,
+      "fat": number in g,
+      "fiber": number in g
     },
-    "healthAssessment": "string"
+    "healthAssessment": "2-3 sentence practical assessment"
   }`;
 
   try {
-    // In a real implementation, we would need to send the image data to the Gemini API
-    // For this demo, we'll return mock data
-    return {
-      identifiedFoods: ["Grilled chicken breast", "Quinoa", "Steamed broccoli", "Olive oil"],
-      nutritionalEstimate: {
-        calories: 420,
-        protein: 35,
-        carbs: 30,
-        fat: 15
-      },
-      healthAssessment: "This is a balanced meal high in protein and fiber with moderate calories. It provides essential nutrients from both animal and plant sources."
-    };
+    const response = await queryGeminiAPI({ prompt, temperature: 0.2 });
+    const jsonMatch = response.match(/\{[\s\S]*\}/);
+    if (jsonMatch) {
+      return JSON.parse(jsonMatch[0]);
+    }
+    throw new Error('Failed to parse meal analysis');
   } catch (error) {
     console.error('Error analyzing meal image:', error);
     throw error;

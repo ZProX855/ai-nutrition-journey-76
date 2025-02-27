@@ -1,32 +1,32 @@
 
 import { ArrowRight, Target, Users, ChartBar, Check } from 'lucide-react';
 
-const journeyCards = [
+const journeySteps = [
   {
     id: 'set-goals',
-    title: 'Set Clear Goals',
-    description: 'Define specific, measurable, achievable, relevant, and time-bound wellness objectives.',
+    title: 'Set Goals',
+    description: '• Pick 1-2 achievable health goals\n• Set realistic timeframes\n• Start small, grow gradually',
     icon: Target,
     color: 'from-emerald-500 to-teal-400',
   },
   {
     id: 'find-support',
-    title: 'Find Support',
-    description: 'Connect with like-minded individuals to share your journey and maintain accountability.',
+    title: 'Get Support',
+    description: '• Share goals with friends/family\n• Join wellness communities\n• Schedule check-ins',
     icon: Users,
     color: 'from-blue-500 to-cyan-400',
   },
   {
     id: 'track-progress',
     title: 'Track Progress',
-    description: 'Monitor your wellness journey with AI insights and celebrate your achievements.',
+    description: '• Log daily activities\n• Take progress photos\n• Celebrate small wins',
     icon: ChartBar,
     color: 'from-purple-500 to-indigo-400',
   },
   {
     id: 'stay-consistent',
-    title: 'Stay Consistent',
-    description: 'Build healthy habits through daily practice and incremental improvements.',
+    title: 'Build Habits',
+    description: '• Follow daily routines\n• Focus on consistency\n• Adjust as needed',
     icon: Check,
     color: 'from-orange-500 to-amber-400',
   },
@@ -35,40 +35,49 @@ const journeyCards = [
 const WellnessJourney = () => {
   return (
     <section className="section-container">
-      <h2 className="section-title">Your Wellness Journey</h2>
-      <p className="section-subtitle">
-        Follow these steps to achieve your health and wellness goals
+      <h2 className="section-title">Your Wellness Roadmap</h2>
+      <p className="section-subtitle mb-12">
+        Follow these steps to achieve your health goals
       </p>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {journeyCards.map((card, index) => (
-          <div 
-            key={card.id}
-            className="feature-card h-full group hover:scale-105 transition-transform"
-          >
-            <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${card.color} flex items-center justify-center mb-4`}>
-              <card.icon className="w-7 h-7 text-white" />
-            </div>
-            
-            <h3 className="text-lg font-semibold mb-2 flex items-center">
-              <span className="w-6 h-6 rounded-full bg-secondary flex items-center justify-center text-sm font-bold mr-2">
-                {index + 1}
-              </span>
-              {card.title}
-            </h3>
-            
-            <p className="text-muted-foreground text-sm mb-4">
-              {card.description}
-            </p>
-            
-            <div className="mt-auto pt-2">
-              <button className="text-sm text-primary font-medium flex items-center group-hover:underline">
-                Learn more
-                <ArrowRight className="ml-1 w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </button>
-            </div>
+      <div className="max-w-4xl mx-auto">
+        <div className="relative">
+          {/* Connection line */}
+          <div className="absolute left-[50%] top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary to-wellness-500" />
+          
+          {/* Journey steps */}
+          <div className="space-y-12">
+            {journeySteps.map((step, index) => (
+              <div 
+                key={step.id}
+                className={`relative flex items-center ${
+                  index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'
+                } gap-8`}
+              >
+                {/* Step content */}
+                <div className={`w-1/2 ${index % 2 === 0 ? 'text-right' : 'text-left'}`}>
+                  <div className="feature-card p-6 hover:scale-105 transition-all duration-300">
+                    <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${step.color} flex items-center justify-center mb-4 ${
+                      index % 2 === 0 ? 'ml-auto' : ''
+                    }`}>
+                      <step.icon className="w-6 h-6 text-white" />
+                    </div>
+                    <h3 className="text-lg font-semibold mb-2">{step.title}</h3>
+                    <div className="text-muted-foreground text-sm whitespace-pre-line">
+                      {step.description}
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Center dot */}
+                <div className="absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-primary border-2 border-white shadow-lg" />
+                
+                {/* Empty space for alignment */}
+                <div className="w-1/2" />
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
     </section>
   );
